@@ -26,14 +26,8 @@
     height: 100vh;
     gap: 20px;
     position: relative;
-  }
-  #frontGif {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    object-fit: cover;
-    z-index: -1;
-    opacity: 0.7;
+    background: url("085f036aa0707d484ad1c2e2eb7bdb8f.gif") no-repeat center center;
+    background-size: cover;
   }
   #frontPage button {
     background: #ff4da6; color: white;
@@ -130,13 +124,21 @@
   #bdayMessage.show { opacity: 1; }
 
   @keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
+
+  /* ✅ Mobile adjustments */
+  @media (max-width: 600px) {
+    h1 { font-size: 22px; }
+    #frontPage p { font-size: 16px; }
+    #frontPage button { padding: 10px 20px; font-size: 16px; }
+    .boxBtn { padding: 20px 30px; font-size: 18px; }
+    .memoryPhoto { max-width: 90%; }
+  }
 </style>
 </head>
 <body>
 
 <!-- Front Page -->
 <div id="frontPage">
-  <img src="085f036aa0707d484ad1c2e2eb7bdb8f.gif" id="frontGif" alt="Birthday GIF">
   <h1>🎉 Happy Birthday Alexa! 🎂</h1>
   <p>Do you want to see your gift? 💖</p>
   <div>
