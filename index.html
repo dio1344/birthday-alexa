@@ -1,78 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Happy Birthday alexa!</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Alexa!</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: #ffe6f0;
+    margin: 0;
+    padding: 20px;
+  }
+
+  h1 { color: #d63384; }
+
+  button {
+    background: #ff4da6;
+    color: white;
+    padding: 20px 40px;
+    font-size: 20px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    box-shadow: 0px 5px 15px rgba(0,0,0,0.2);
+    transition: 0.3s;
+    margin-top: 20px;
+  }
+  button:hover { background: #e60073; transform: scale(1.05); }
+
+  #memoryContainer {
+    margin-top: 30px;
+  }
+
+  .memory {
+    display: none; /* hidden initially */
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.5s ease;
+  }
+
+  .memory.show {
+    display: flex;
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .memory img {
+    width: 250px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.3);
+  }
+
+  .memory p {
+    max-width: 250px;
+    font-size: 18px;
+    color: #d63384;
+    text-align: left;
+  }
+
+  @media (max-width: 600px) {
+    .memory {
+      flex-direction: column;
       text-align: center;
-      background: #ffe6f0;
-      margin: 0;
-      padding: 20px;
     }
-
-    h1 {
-      color: #d63384;
+    .memory p {
+      max-width: 100%;
     }
-
-    /* Gift card button */
-    #showMemoriesBtn {
-      background: #ff4da6;
-      color: white;
-      padding: 20px 40px;
-      font-size: 20px;
-      border: none;
-      border-radius: 15px;
-      cursor: pointer;
-      box-shadow: 0px 5px 15px rgba(0,0,0,0.2);
-      transition: 0.3s;
-    }
-
-    #showMemoriesBtn:hover {
-      background: #e60073;
-      transform: scale(1.05);
-    }
-
-    /* Gallery */
-    #gallery {
-      margin-top: 30px;
-      display: none;
-    }
-
-    #gallery img {
-      width: 250px;
-      margin: 10px;
-      border-radius: 10px;
-      box-shadow: 0px 4px 10px rgba(0,0,0,0.3);
-    }
-  </style>
+  }
+</style>
 </head>
 <body>
 
-  <h1>🎉 Happy Birthday Alexa! 🎂</h1>
-  <p>Click the gift card below to see our memories 💖</p>
+<h1>🎉 Happy Birthday Alexa! 🎂</h1>
+<p>Click the button to see our memories one by one 💖</p>
 
-  <!-- Gift card button -->
-  <button id="showMemoriesBtn">🎁 Open Gift</button>
+<button id="nextBtn">🎁 Show Memory</button>
 
-  <!-- Gallery -->
-  <div id="gallery">
-    <h2>📸 Our Memories</h2>
+<div id="memoryContainer">
+  <div class="memory" id="memory1">
     <img src="IMG_20250808_224412_489.jpg" alt="Memory 1">
-    <img src="IMG_20250808_224345_724.jpg" alt="Memory 2">
-    <img src="IMG_20250808_224338_724.jpg" alt="Memory 3">
-    <img src="image.jpg" alt="Memory 4">
-    <img src="2025-08-08-3732883265_cFrh24dq_265901392d1078981486a4c5db8963d033b02cb3.jpg" alt="Memory 5">
+    <p>Remember this pic? hahahaha the bombastick side eye moments nimo bwhahahaha anways this is my fav pic so far and it means alot to me thank you for everything boss💖</p>
   </div>
+  <div class="memory" id="memory2">
+    <img src="IMG_20250808_224345_724.jpg" alt="Memory 2">
+    <p>I was kilig ani bwahahahaha ngl and it was fun hanging out with you beh. Never been so happy till i met you &lt;3</p>
+  </div>
+  <div class="memory" id="memory3">
+    <img src="IMG_20250808_224338_724.jpg" alt="Memory 3">
+    <p>I like your eyes here very much cant stop staring at your eyes whenever mag uban ta and even its full of people all i see you and only you boss</p>
+  </div>
+  <div class="memory" id="memory4">
+    <img src="image.jpg" alt="Memory 4">
+    <p>Ah yes syempre how could i forget this, My very First Time experiencing photo booth and im glad it was you alexa,it made me so happy boss 🌸</p>
+  </div>
+  <div class="memory" id="memory5">
+    <img src="2025-08-08-3732883265_cFrh24dq_265901392d1078981486a4c5db8963d033b02cb3.jpg" alt="Memory 5">
+    <p>Syempre the last one pinaka fave nako sa tanan slowly falling inlove with you at this moment alexa ❤️!</p>
+  </div>
+</div>
 
-  <script>
-    document.getElementById("showMemoriesBtn").addEventListener("click", function() {
-      document.getElementById("gallery").style.display = "block";
-      this.style.display = "none"; // hide button after click
-    });
-  </script>
+<script>
+  const memories = ['memory1','memory2','memory3','memory4','memory5'];
+  let current = 0;
+  const btn = document.getElementById("nextBtn");
+
+  btn.addEventListener("click", () => {
+    if (current < memories.length) {
+      const mem = document.getElementById(memories[current]);
+      mem.classList.add("show"); // triggers pop-out animation
+      current++;
+    }
+    if (current === memories.length) {
+      btn.style.display = "none"; // hide button after last memory
+    }
+  });
+</script>
 
 </body>
 </html>
+
