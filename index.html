@@ -63,19 +63,19 @@
     box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
   }
 
-  .nextBtn {
+  .navBtn {
     background: #ff4da6;
     color: white;
-    padding: 15px 30px;
-    font-size: 18px;
+    padding: 10px 25px;
+    font-size: 16px;
     border: none;
     border-radius: 15px;
     cursor: pointer;
     box-shadow: 0px 5px 15px rgba(0,0,0,0.2);
-    margin-top: 10px;
+    margin: 5px;
   }
 
-  .nextBtn:hover { background: #e60073; transform: scale(1.05); }
+  .navBtn:hover { background: #e60073; transform: scale(1.05); }
 
   @media (max-width: 600px) {
     .memory {
@@ -98,52 +98,74 @@
 <body>
 
 <h1>🎉 Happy Birthday Alexa! 🎂</h1>
-<p>Click the button to see our memories one by one 💖</p>
+<p>Click the buttons to see our memories 💖</p>
 
 <div class="memoryContainer">
   <div class="memory" id="memory1">
     <img src="IMG_20250808_224412_489.jpg" alt="Memory 1">
     <p>Remember this pic? hahahaha the bombastick side eye moments nimo bwhahahaha anways this is my fav pic so far and it means alot to me thank you for everything boss💖</p>
-    <button class="nextBtn">Next</button>
+    <div>
+      <button class="navBtn" style="display:none;">Back</button>
+      <button class="navBtn">Next</button>
+    </div>
   </div>
   <div class="memory" id="memory2">
     <img src="IMG_20250808_224345_724.jpg" alt="Memory 2">
     <p>I was kilig ani bwahahahaha ngl and it was fun hanging out with you beh. Never been so happy till i met you &lt;3</p>
-    <button class="nextBtn">Next</button>
+    <div>
+      <button class="navBtn">Back</button>
+      <button class="navBtn">Next</button>
+    </div>
   </div>
   <div class="memory" id="memory3">
     <img src="IMG_20250808_224338_724.jpg" alt="Memory 3">
     <p>I like your eyes here very much cant stop staring at your eyes whenever mag uban ta and even its full of people all i see you and only you boss</p>
-    <button class="nextBtn">Next</button>
+    <div>
+      <button class="navBtn">Back</button>
+      <button class="navBtn">Next</button>
+    </div>
   </div>
   <div class="memory" id="memory4">
     <img src="image.jpg" alt="Memory 4">
     <p>Ah yes syempre how could i forget this, My very First Time experiencing photo booth and im glad it was you alexa,it made me so happy boss 🌸</p>
-    <button class="nextBtn">Next</button>
+    <div>
+      <button class="navBtn">Back</button>
+      <button class="navBtn">Next</button>
+    </div>
   </div>
   <div class="memory" id="memory5">
     <img src="2025-08-08-3732883265_cFrh24dq_265901392d1078981486a4c5db8963d033b02cb3.jpg" alt="Memory 5">
     <p>Syempre the last one pinaka fave nako sa tanan slowly falling inlove with you at this moment alexa ❤️!</p>
+    <div>
+      <button class="navBtn">Back</button>
+    </div>
   </div>
 </div>
 
 <script>
 const memories = document.querySelectorAll('.memory');
+let currentIndex = 0;
 
-// Show the first memory initially
-memories[0].classList.add('show');
+// Show first memory
+memories[currentIndex].classList.add('show');
 
-// Add click events to all "Next" buttons
 memories.forEach((memory, index) => {
-  const btn = memory.querySelector('.nextBtn');
-  if(btn){
+  const buttons = memory.querySelectorAll('.navBtn');
+  
+  buttons.forEach(btn => {
     btn.addEventListener('click', () => {
-      btn.style.display = 'none'; // hide button
-      if(index + 1 < memories.length){
-        memories[index+1].classList.add('show'); // show next memory
+      if(btn.innerText === 'Next' && index+1 < memories.length){
+        memory.classList.remove('show');
+        currentIndex = index+1;
+        memories[currentIndex].classList.add('show');
+      }
+      if(btn.innerText === 'Back' && index-1 >= 0){
+        memory.classList.remove('show');
+        currentIndex = index-1;
+        memories[currentIndex].classList.add('show');
       }
     });
-  }
+  });
 });
 </script>
 
