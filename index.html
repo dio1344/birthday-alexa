@@ -10,13 +10,41 @@
     text-align: center;
     background: #ffe6f0;
     margin: 0;
-    padding: 20px;
+    padding: 0;
     overflow-x: hidden;
     position: relative;
     min-height: 100vh;
   }
 
   h1 { color: #d63384; }
+
+  /* Front Page */
+  #frontPage {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  #frontPage button {
+    background: #ff4da6;
+    color: white;
+    padding: 20px 40px;
+    font-size: 20px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    box-shadow: 0px 5px 15px rgba(0,0,0,0.2);
+    margin: 10px;
+    transition: 0.3s;
+    position: relative;
+  }
+
+  #frontPage button:hover {
+    background: #e60073;
+    transform: scale(1.05);
+  }
 
   .memoryContainer {
     position: relative;
@@ -48,10 +76,8 @@
     width: 250px;
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0,0,0,0.3);
-    transition: all 0.6s ease;
   }
 
-  /* Message box styling */
   .memory p {
     max-width: 250px;
     font-size: 18px;
@@ -87,20 +113,29 @@
     }
   }
 
-  /* Different positions for unaligned effect */
+  /* Unaligned positions */
   #memory1.show { top: 10%; left: 10%; }
   #memory2.show { top: 30%; left: 60%; }
   #memory3.show { top: 50%; left: 20%; }
   #memory4.show { top: 70%; left: 50%; }
   #memory5.show { top: 40%; left: 40%; }
+
 </style>
 </head>
 <body>
 
-<h1>🎉 Happy Birthday Alexa! 🎂</h1>
-<p>Click the buttons to see our memories 💖</p>
+<!-- Front Page with Yes/No -->
+<div id="frontPage">
+  <h1>🎉 Happy Birthday Alexa! 🎂</h1>
+  <p>Do you want to see our special memories? 💖</p>
+  <div>
+    <button id="yesBtn">Yes</button>
+    <button id="noBtn">No</button>
+  </div>
+</div>
 
-<div class="memoryContainer">
+<!-- Memory Sequence -->
+<div class="memoryContainer" id="memoryContainer" style="display:none;">
   <div class="memory" id="memory1">
     <img src="IMG_20250808_224412_489.jpg" alt="Memory 1">
     <p>Remember this pic? hahahaha the bombastick side eye moments nimo bwhahahaha anways this is my fav pic so far and it means alot to me thank you for everything boss💖</p>
@@ -143,12 +178,30 @@
 </div>
 
 <script>
+const frontPage = document.getElementById('frontPage');
+const yesBtn = document.getElementById('yesBtn');
+const noBtn = document.getElementById('noBtn');
+const memoryContainer = document.getElementById('memoryContainer');
 const memories = document.querySelectorAll('.memory');
 let currentIndex = 0;
 
-// Show first memory
-memories[currentIndex].classList.add('show');
+// YES button -> proceed to memory sequence
+yesBtn.addEventListener('click', () => {
+  frontPage.style.display = 'none';
+  memoryContainer.style.display = 'block';
+  memories[currentIndex].classList.add('show');
+});
 
+// NO button -> jumps to random position
+noBtn.addEventListener('mouseenter', () => {
+  const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+  const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+  noBtn.style.position = 'absolute';
+  noBtn.style.left = `${x}px`;
+  noBtn.style.top = `${y}px`;
+});
+
+// Next & Back navigation
 memories.forEach((memory, index) => {
   const buttons = memory.querySelectorAll('.navBtn');
   
