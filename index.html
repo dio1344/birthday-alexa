@@ -122,7 +122,7 @@
     position: fixed;
     top: 0; left: 0;
     width: 100vw; height: 100vh;
-    padding: 20px;
+    padding: 0px;
     display: none;
     background-image: url('papel.jpg');
     background-repeat: no-repeat;
@@ -132,9 +132,16 @@
     justify-content: center;
     align-items: center;
   }
-  .memoryPhoto { display: none; max-width: 95vw; max-height: 50vh; margin-bottom: 20px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); object-fit: contain; }
+  .memoryPhoto { display: none; max-width: 95vw; max-height:75vh; margin-bottom: 20px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); object-fit: contain; }
   .memoryPhoto.show { display: block; animation: fadeIn 1s; }
-  .memoryMessage { font-size: 14px; color: #d63384; margin: 10px 0; min-height: 60px; opacity: 0; transition: opacity 1s ease; }
+  .memoryMessage {
+    font-size: 18px; /* increased from 14px */
+    color: #d63384;
+    margin: 10px 0;
+    min-height: 60px;
+    opacity: 0;
+    transition: opacity 1s ease;
+  }
   .memoryMessage.show { opacity: 1; }
   .navBtn { background: #ff4da6; color: white; padding: 10px 25px; font-size: 14px; border: none; border-radius: 15px; cursor: pointer; margin: 10px; }
   .navBtn:hover { background: #e60073; }
@@ -161,18 +168,20 @@
     display: flex;
     gap: 10px;
     justify-content: center;
-    flex-wrap: nowrap;
-    overflow-x: auto;
+    flex-wrap: wrap;
     margin-bottom: 20px;
   }
   #bdayPics img {
     height: auto;
-    max-height: 120px;
+    max-height: 160px;
     border-radius: 10px;
     object-fit: cover;
     flex-shrink: 0;
     opacity: 0;
     transition: opacity 1s ease;
+  }
+  #bdayPics img:last-child {
+    max-height: 220px;
   }
   #bdayText { margin-top: 10px; font-size: 14px; }
   #bdayMessage button { background: #fff; color: #ff4da6; font-weight: bold; border: none; border-radius: 10px; padding: 10px 20px; cursor: pointer; transition: 0.3s; display: none; }
@@ -184,7 +193,7 @@
     #frontPage h1 { font-size: 1.5rem; }
     #frontPage button { font-size: 14px; padding: 10px 20px; }
     .card { font-size: 14px; }
-    .memoryMessage { font-size: 12px; }
+    .memoryMessage { font-size: 16px; } /* slightly smaller on mobile */
     #bdayText { font-size: 12px; }
   }
 </style>
@@ -361,7 +370,7 @@ cards.forEach(card => {
           }
           const img = document.createElement('img');
           img.src = pics[index];
-          if(index === pics.length-1) img.style.height = "180px";
+          if(index === pics.length-1) img.style.maxHeight = "220px"; // bigger third image
           bdayPics.appendChild(img);
           setTimeout(()=>{ img.style.opacity = 1; }, 50);
           index++;
@@ -381,7 +390,7 @@ cards.forEach(card => {
 });
 
 // Birthday Message Back Button
-bdayBackBtn.onclick = () => { bdayMessage.style.display = 'none'; chooseBox.style.display = 'flex'; spawnFloaters(); };
+bdayBackBtn.onclick = () => { bdayMessage.style.display = 'none'; chooseBox.style.display="flex"; spawnFloaters(); };
 </script>
 </body>
 </html>
