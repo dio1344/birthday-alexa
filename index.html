@@ -13,6 +13,7 @@
     padding: 0;
     overflow-x: hidden;
     min-height: 100vh;
+    font-size: 16px;
   }
   h1 { color: #d63384; }
 
@@ -34,9 +35,11 @@
     z-index: -1;
     opacity: 0.7;
   }
+  #frontPage h1 { font-size: 1.8rem; }
+  #frontPage p { font-size: 1rem; }
   #frontPage button {
     background: #ff4da6; color: white;
-    padding: 15px 30px; font-size: 20px;
+    padding: 12px 25px; font-size: 16px;
     border: none; border-radius: 15px;
     cursor: pointer; margin: 10px;
     transition: 0.3s;
@@ -81,16 +84,12 @@
     position: relative;
     overflow: hidden;
   }
-  .floating-heart, .floating-card {
+  #floatContainer span {
     position: absolute;
     font-size: 30px;
     opacity: 0.6;
     pointer-events: none;
     animation: floatUp linear infinite;
-  }
-  .floating-card {
-    font-size: 40px;
-    color: rgba(255,255,255,0.4);
   }
   @keyframes floatUp {
     0% { transform: translateY(100vh) translateX(0) rotate(0deg); opacity: 0; }
@@ -98,8 +97,10 @@
     100% { transform: translateY(-50vh) translateX(50px) rotate(360deg); opacity: 0; }
   }
   .card {
-    width: 200px;
-    height: 120px;
+    width: 80%;
+    max-width: 200px;
+    height: auto;
+    padding: 15px;
     background: #ff80bf;
     border-radius: 15px;
     box-shadow: 0 8px 20px rgba(0,0,0,0.3);
@@ -107,7 +108,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
     color: white;
     cursor: pointer;
@@ -131,21 +132,21 @@
     justify-content: center;
     align-items: center;
   }
-  .memoryPhoto { display: none; max-width: 90vw; max-height: 60vh; margin-bottom: 20px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); object-fit: contain; }
+  .memoryPhoto { display: none; max-width: 95vw; max-height: 50vh; margin-bottom: 20px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); object-fit: contain; }
   .memoryPhoto.show { display: block; animation: fadeIn 1s; }
-  .memoryMessage { font-size: 18px; color: #d63384; margin: 10px 0; min-height: 60px; opacity: 0; transition: opacity 1s ease; }
+  .memoryMessage { font-size: 14px; color: #d63384; margin: 10px 0; min-height: 60px; opacity: 0; transition: opacity 1s ease; }
   .memoryMessage.show { opacity: 1; }
-  .navBtn { background: #ff4da6; color: white; padding: 10px 25px; font-size: 16px; border: none; border-radius: 15px; cursor: pointer; margin: 10px; }
+  .navBtn { background: #ff4da6; color: white; padding: 10px 25px; font-size: 14px; border: none; border-radius: 15px; cursor: pointer; margin: 10px; }
   .navBtn:hover { background: #e60073; }
 
   /* Birthday Message */
   #bdayMessage {
-    padding: 20px;
-    font-size: 20px;
+    padding: 15px;
+    font-size: 16px;
     color: white;
-    width: 90%;
-    max-width: 500px;
-    min-height: 250px;
+    width: 95%;
+    max-width: 400px;
+    min-height: auto;
     margin: 100px auto;
     position: relative;
     background: #ff4da6;
@@ -165,18 +166,27 @@
     margin-bottom: 20px;
   }
   #bdayPics img {
-    height: 150px;
+    height: auto;
+    max-height: 120px;
     border-radius: 10px;
     object-fit: cover;
     flex-shrink: 0;
     opacity: 0;
     transition: opacity 1s ease;
   }
-  #bdayText { margin-top: 10px; }
+  #bdayText { margin-top: 10px; font-size: 14px; }
   #bdayMessage button { background: #fff; color: #ff4da6; font-weight: bold; border: none; border-radius: 10px; padding: 10px 20px; cursor: pointer; transition: 0.3s; display: none; }
   #bdayMessage button:hover { background: #ffe6f0; }
 
   @keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
+
+  @media (max-width: 480px) {
+    #frontPage h1 { font-size: 1.5rem; }
+    #frontPage button { font-size: 14px; padding: 10px 20px; }
+    .card { font-size: 14px; }
+    .memoryMessage { font-size: 12px; }
+    #bdayText { font-size: 12px; }
+  }
 </style>
 </head>
 <body>
@@ -330,7 +340,6 @@ cards.forEach(card => {
         let index = 0;
         function fadePics(){
           if(index >= pics.length){
-            // After pics fade in, show message
             const text = "Happy Birthday Alexa! 🥳💖 I’m so grateful for you. I hope your day is filled with love and happiness!";
             let i = 0;
             function showLetterByLetter(){
@@ -352,7 +361,7 @@ cards.forEach(card => {
           }
           const img = document.createElement('img');
           img.src = pics[index];
-          if(index === pics.length-1) img.style.height = "180px"; // last pic slightly bigger
+          if(index === pics.length-1) img.style.height = "180px";
           bdayPics.appendChild(img);
           setTimeout(()=>{ img.style.opacity = 1; }, 50);
           index++;
