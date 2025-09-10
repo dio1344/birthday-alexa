@@ -250,6 +250,9 @@
   <button id="bdayBackBtn">Back</button>
 </div>
 
+<!-- Music for Choose Box -->
+<audio id="chooseMusic" src="wave to earth - love. (Official Lyric Video).mp3" loop></audio>
+
 <script>
 const frontPage = document.getElementById('frontPage');
 const yesBtn = document.getElementById('yesBtn');
@@ -272,6 +275,7 @@ const bdayMessage = document.getElementById('bdayMessage');
 const bdayPics = document.getElementById('bdayPics');
 const bdayText = document.getElementById('bdayText');
 const bdayBackBtn = document.getElementById('bdayBackBtn');
+const chooseMusic = document.getElementById('chooseMusic');
 
 const messages = [
   "Remember this pic? hahahaha the bombastick side eye moments nimo bwhahahaha anways this is my fav pic so far and it means alot to me thank you for everything boss💖",
@@ -283,11 +287,36 @@ const messages = [
 let step = 0;
 
 // Front page navigation
-yesBtn.onclick = ()=>{ frontPage.style.display="none"; chooseBox.style.display="flex"; spawnFloaters(); }
-noBtn.onclick = ()=>{ noPopup.style.display="block"; yesBtn.disabled = true; noBtn.disabled = true; }
-popupYes.onclick = ()=>{ noPopup.style.display="none"; yeeeyPopup.style.display="block"; yesBtn.disabled = false; noBtn.disabled = false; }
-popupPretty.onclick = ()=>{ noPopup.style.display="none"; yeeeyPopup.style.display="block"; yesBtn.disabled = false; noBtn.disabled = false; }
-yeeeyOk.onclick = ()=>{ yeeeyPopup.style.display="none"; frontPage.style.display="none"; chooseBox.style.display="flex"; spawnFloaters(); }
+yesBtn.onclick = ()=>{
+  frontPage.style.display="none"; 
+  chooseBox.style.display="flex"; 
+  chooseMusic.play();
+  spawnFloaters(); 
+}
+noBtn.onclick = ()=>{
+  noPopup.style.display="block"; 
+  yesBtn.disabled = true; 
+  noBtn.disabled = true; 
+}
+popupYes.onclick = ()=>{
+  noPopup.style.display="none"; 
+  yeeeyPopup.style.display="block"; 
+  yesBtn.disabled = false; 
+  noBtn.disabled = false; 
+}
+popupPretty.onclick = ()=>{
+  noPopup.style.display="none"; 
+  yeeeyPopup.style.display="block"; 
+  yesBtn.disabled = false; 
+  noBtn.disabled = false; 
+}
+yeeeyOk.onclick = ()=>{
+  yeeeyPopup.style.display="none"; 
+  frontPage.style.display="none"; 
+  chooseBox.style.display="flex"; 
+  chooseMusic.play();
+  spawnFloaters(); 
+}
 
 // Memories navigation
 function showStep(){
@@ -301,8 +330,25 @@ function showStep(){
     setTimeout(()=>memoryMessage.classList.add("show"), 50);
   }
 }
-nextBtn.onclick = () => { if (step < photos.length * 2 - 1) { step++; showStep(); } else { memoryContainer.style.display="none"; chooseBox.style.display="flex"; } }
-backBtn.onclick = () => { if (step > 1) { step = Math.floor((step - 1) / 2) * 2 - 1; if (step < 1) step = 1; showStep(); } else { memoryContainer.style.display="none"; chooseBox.style.display="flex"; } }
+nextBtn.onclick = () => { 
+  if (step < photos.length * 2 - 1) { step++; showStep(); } 
+  else { 
+    memoryContainer.style.display="none"; 
+    chooseBox.style.display="flex"; 
+    chooseMusic.play(); // resume music
+  } 
+}
+backBtn.onclick = () => { 
+  if (step > 1) { 
+    step = Math.floor((step - 1) / 2) * 2 - 1; 
+    if (step < 1) step = 1; 
+    showStep(); 
+  } else { 
+    memoryContainer.style.display="none"; 
+    chooseBox.style.display="flex"; 
+    chooseMusic.play(); // resume music
+  } 
+}
 
 // Spawn floating hearts/cards immediately on page 2
 function spawnFloaters(){
@@ -331,6 +377,7 @@ cards.forEach(card => {
       if(card.id === 'memoriesBox'){
         chooseBox.style.display = 'none';
         memoryContainer.style.display = 'flex';
+        chooseMusic.pause();
         step = 0;
         showStep();
       } else if(card.id === 'messageBox'){
@@ -339,6 +386,7 @@ cards.forEach(card => {
         bdayPics.innerHTML = "";
         bdayText.textContent = "";
         bdayBackBtn.style.display = 'none';
+        chooseMusic.pause();
 
         const pics = [
           "456512084_3927410717515868_941715196878329371_n.jpg",
@@ -370,7 +418,7 @@ cards.forEach(card => {
           }
           const img = document.createElement('img');
           img.src = pics[index];
-          if(index === pics.length-1) img.style.maxHeight = "220px"; // bigger third image
+          if(index === pics.length-1) img.style.maxHeight = "220px"; 
           bdayPics.appendChild(img);
           setTimeout(()=>{ img.style.opacity = 1; }, 50);
           index++;
@@ -383,6 +431,7 @@ cards.forEach(card => {
         frontPage.style.display = 'flex';
         yesBtn.disabled = false;
         noBtn.disabled = false;
+        chooseMusic.pause();
       }
       card.classList.remove('open');
     }, 500);
@@ -390,7 +439,11 @@ cards.forEach(card => {
 });
 
 // Birthday Message Back Button
-bdayBackBtn.onclick = () => { bdayMessage.style.display = 'none'; chooseBox.style.display="flex"; spawnFloaters(); };
+bdayBackBtn.onclick = () => { 
+  bdayMessage.style.display = 'none'; 
+  chooseBox.style.display="flex"; 
+  chooseMusic.play(); 
+};
 </script>
 </body>
 </html>
