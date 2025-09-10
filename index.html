@@ -14,7 +14,6 @@
     overflow-x: hidden;
     min-height: 100vh;
   }
-
   h1 { color: #d63384; }
 
   /* Front Page */
@@ -45,16 +44,12 @@
   #frontPage button:hover { background: #e60073; transform: scale(1.05); }
 
   /* Hide all except frontPage at start */
-  #noPopup,
-  #envelope,
-  #chooseBox,
-  #memoryContainer,
-  #bdayMessage {
+  #noPopup, #yeeeyPopup, #chooseBox, #memoryContainer, #bdayMessage {
     display: none;
   }
 
-  /* Floating Popup */
-  #noPopup {
+  /* Popups */
+  #noPopup, #yeeeyPopup {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -65,73 +60,121 @@
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     z-index: 10;
   }
+  #noPopup button, #yeeeyPopup button {
+    background: #ff4da6;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    margin: 10px;
+    cursor: pointer;
+  }
+  #noPopup button:hover, #yeeeyPopup button:hover { background: #e60073; }
 
-  /* Choose Box Page */
+  /* Choose Cards */
   #chooseBox {
     flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 100vh;
+    background: radial-gradient(circle at top left, #ffc1d9, #ff69b4);
+    position: relative;
+    overflow: hidden;
   }
-  .boxBtn {
-    background: #ff4da6;
-    color: white;
-    padding: 30px 50px;
-    font-size: 22px;
+  .floating-heart, .floating-card {
+    position: absolute;
+    font-size: 30px;
+    opacity: 0.6;
+    pointer-events: none;
+    animation: floatUp linear infinite;
+  }
+  .floating-card {
+    font-size: 40px;
+    color: rgba(255,255,255,0.4);
+  }
+  @keyframes floatUp {
+    0% { transform: translateY(100vh) translateX(0) rotate(0deg); opacity: 0; }
+    50% { opacity: 0.8; }
+    100% { transform: translateY(-50vh) translateX(50px) rotate(360deg); opacity: 0; }
+  }
+  .card {
+    width: 200px;
+    height: 120px;
+    background: #ff80bf;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
     margin: 20px;
-    border-radius: 20px;
-    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
     cursor: pointer;
-    transition: 0.3s;
+    transition: transform 0.3s, background 0.3s;
+    z-index: 1;
   }
-  .boxBtn:hover { background: #e60073; transform: scale(1.05); }
+  .card:hover { transform: scale(1.05); background: #ff4da6; }
 
   /* Memories */
   .memoryContainer {
-    position: relative;
-    width: 100%;
-    min-height: 80vh;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
     padding: 20px;
-  }
-  .memoryPhoto {
     display: none;
-    max-width: 300px;
-    margin: 20px auto;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    background-image: url('papel.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
+  .memoryPhoto { display: none; max-width: 90vw; max-height: 60vh; margin-bottom: 20px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); object-fit: contain; }
   .memoryPhoto.show { display: block; animation: fadeIn 1s; }
-
-  .memoryMessage {
-    font-size: 18px;
-    color: #d63384;
-    margin: 20px;
-    min-height: 60px;
-    opacity: 0;
-    transition: opacity 1s ease;
-  }
-  .memoryMessage.show {
-    opacity: 1;
-  }
-
-  .navBtn {
-    background: #ff4da6; color: white;
-    padding: 10px 25px;
-    font-size: 16px;
-    border: none; border-radius: 15px;
-    cursor: pointer; margin: 10px;
-  }
+  .memoryMessage { font-size: 18px; color: #d63384; margin: 10px 0; min-height: 60px; opacity: 0; transition: opacity 1s ease; }
+  .memoryMessage.show { opacity: 1; }
+  .navBtn { background: #ff4da6; color: white; padding: 10px 25px; font-size: 16px; border: none; border-radius: 15px; cursor: pointer; margin: 10px; }
   .navBtn:hover { background: #e60073; }
 
   /* Birthday Message */
   #bdayMessage {
-    padding: 40px;
+    padding: 20px;
     font-size: 20px;
-    color: #d63384;
+    color: white;
+    width: 90%;
+    max-width: 500px;
+    min-height: 250px;
+    margin: 100px auto;
+    position: relative;
+    background: #ff4da6;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    text-align: center;
+    flex-direction: column;
+    gap: 15px;
+    overflow: hidden;
+  }
+  #bdayPics {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin-bottom: 20px;
+  }
+  #bdayPics img {
+    height: 150px;
+    border-radius: 10px;
+    object-fit: cover;
+    flex-shrink: 0;
     opacity: 0;
     transition: opacity 1s ease;
   }
-  #bdayMessage.show { opacity: 1; }
+  #bdayText { margin-top: 10px; }
+  #bdayMessage button { background: #fff; color: #ff4da6; font-weight: bold; border: none; border-radius: 10px; padding: 10px 20px; cursor: pointer; transition: 0.3s; display: none; }
+  #bdayMessage button:hover { background: #ffe6f0; }
 
   @keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
 </style>
@@ -149,25 +192,24 @@
   </div>
 </div>
 
-<!-- Popup -->
+<!-- Popups -->
 <div id="noPopup">
   Are you sure? 😅 <br>
   <button id="popupYes">Yes</button>
-  <button id="popupNo">No</button>
+  <button id="popupPretty">Yes Pretty</button>
+</div>
+<div id="yeeeyPopup">
+  Yeeey 🎉 <br>
+  <button id="yeeeyOk">Go!</button>
 </div>
 
-<!-- Envelope -->
-<div id="envelope">
-  Please 💌 <br>
-  <button id="envelopeOk">Okay</button>
-</div>
-
-<!-- Choose Box -->
+<!-- Choose Cards -->
 <div id="chooseBox">
-  <h2>Pick a Box 🎁</h2>
-  <button class="boxBtn" id="memoriesBox">Memories</button>
-  <button class="boxBtn" id="messageBox">Birthday Message</button>
-  <button class="boxBtn" id="backHomeBtn">⬅ Back</button>
+  <h2>Pick a Love Letter 💌</h2>
+  <div id="floatContainer"></div>
+  <div class="card" id="memoriesBox">Memories</div>
+  <div class="card" id="messageBox">Birthday Message</div>
+  <div class="card" id="backHomeBtn">Back</div>
 </div>
 
 <!-- Memories -->
@@ -177,15 +219,17 @@
   <img src="IMG_20250808_224338_724.jpg" class="memoryPhoto">
   <img src="image.jpg" class="memoryPhoto">
   <img src="2025-08-08-3732883265_cFrh24dq_265901392d1078981486a4c5db8963d033b02cb3.jpg" class="memoryPhoto">
-
   <div class="memoryMessage" id="memoryMessage"></div>
-
   <button class="navBtn" id="backBtn">Back</button>
   <button class="navBtn" id="nextBtn">Next</button>
 </div>
 
 <!-- Birthday Message -->
-<div id="bdayMessage"></div>
+<div id="bdayMessage">
+  <div id="bdayPics"></div>
+  <div id="bdayText"></div>
+  <button id="bdayBackBtn">Back</button>
+</div>
 
 <script>
 const frontPage = document.getElementById('frontPage');
@@ -193,19 +237,22 @@ const yesBtn = document.getElementById('yesBtn');
 const noBtn = document.getElementById('noBtn');
 const noPopup = document.getElementById('noPopup');
 const popupYes = document.getElementById('popupYes');
-const popupNo = document.getElementById('popupNo');
-const envelope = document.getElementById('envelope');
-const envelopeOk = document.getElementById('envelopeOk');
+const popupPretty = document.getElementById('popupPretty');
+const yeeeyPopup = document.getElementById('yeeeyPopup');
+const yeeeyOk = document.getElementById('yeeeyOk');
 const chooseBox = document.getElementById('chooseBox');
 const memoriesBox = document.getElementById('memoriesBox');
 const messageBox = document.getElementById('messageBox');
+const backHomeBtn = document.getElementById('backHomeBtn');
 const memoryContainer = document.getElementById('memoryContainer');
 const photos = document.querySelectorAll('.memoryPhoto');
 const memoryMessage = document.getElementById('memoryMessage');
 const nextBtn = document.getElementById('nextBtn');
 const backBtn = document.getElementById('backBtn');
 const bdayMessage = document.getElementById('bdayMessage');
-const backHomeBtn = document.getElementById('backHomeBtn');
+const bdayPics = document.getElementById('bdayPics');
+const bdayText = document.getElementById('bdayText');
+const bdayBackBtn = document.getElementById('bdayBackBtn');
 
 const messages = [
   "Remember this pic? hahahaha the bombastick side eye moments nimo bwhahahaha anways this is my fav pic so far and it means alot to me thank you for everything boss💖",
@@ -214,55 +261,118 @@ const messages = [
   "Ah yes syempre how could i forget this, My very First Time experiencing photo booth and im glad it was you alexa,it made me so happy boss 🌸",
   "Syempre the last one pinaka fave nako sa tanan slowly falling inlove with you at this moment alexa ❤️!"
 ];
-let step = 0; // step counts photo+message state
+let step = 0;
 
 // Front page navigation
-yesBtn.onclick = ()=>{ frontPage.style.display="none"; chooseBox.style.display="flex"; }
-noBtn.onclick = ()=>{ noPopup.style.display="block"; }
-popupNo.onclick = ()=>{ noPopup.style.display="none"; }
-popupYes.onclick = ()=>{ noPopup.style.display="none"; frontPage.style.display="none"; chooseBox.style.display="flex"; }
-envelopeOk.onclick = ()=>{ envelope.style.display="none"; chooseBox.style.display="flex"; }
+yesBtn.onclick = ()=>{ frontPage.style.display="none"; chooseBox.style.display="flex"; spawnFloaters(); }
+noBtn.onclick = ()=>{ noPopup.style.display="block"; yesBtn.disabled = true; noBtn.disabled = true; }
+popupYes.onclick = ()=>{ noPopup.style.display="none"; yeeeyPopup.style.display="block"; yesBtn.disabled = false; noBtn.disabled = false; }
+popupPretty.onclick = ()=>{ noPopup.style.display="none"; yeeeyPopup.style.display="block"; yesBtn.disabled = false; noBtn.disabled = false; }
+yeeeyOk.onclick = ()=>{ yeeeyPopup.style.display="none"; frontPage.style.display="none"; chooseBox.style.display="flex"; spawnFloaters(); }
 
-// Box selection
-memoriesBox.onclick = ()=>{ chooseBox.style.display="none"; memoryContainer.style.display="block"; step=0; showStep(); }
-messageBox.onclick = ()=>{ chooseBox.style.display="none"; bdayMessage.style.display="block"; bdayMessage.textContent = "Happy Birthday Alexa! 🥳💖 I’m so grateful for you. I hope your day is filled with love and happiness!"; bdayMessage.classList.add("show"); }
-backHomeBtn.onclick = ()=>{ chooseBox.style.display="none"; frontPage.style.display="flex"; }
-
-// Show memories
+// Memories navigation
 function showStep(){
   photos.forEach(p=>p.classList.remove('show'));
   memoryMessage.classList.remove("show");
   memoryMessage.textContent="";
-  
   let index = Math.floor(step/2);
   photos[index].classList.add('show');
-  
   if(step%2===1){
     memoryMessage.textContent = messages[index];
     setTimeout(()=>memoryMessage.classList.add("show"), 50);
   }
 }
+nextBtn.onclick = () => { if (step < photos.length * 2 - 1) { step++; showStep(); } else { memoryContainer.style.display="none"; chooseBox.style.display="flex"; } }
+backBtn.onclick = () => { if (step > 1) { step = Math.floor((step - 1) / 2) * 2 - 1; if (step < 1) step = 1; showStep(); } else { memoryContainer.style.display="none"; chooseBox.style.display="flex"; } }
 
-// Navigation buttons
-nextBtn.onclick = () => {
-  if (step < photos.length * 2 - 1) {
-    step++;
-    showStep();
-  } else {
-    memoryContainer.style.display = "none";
-    chooseBox.style.display = "flex";
+// Spawn floating hearts/cards immediately on page 2
+function spawnFloaters(){
+  const floatContainer = document.getElementById('floatContainer');
+  floatContainer.innerHTML = "";
+  const floatEmojis = ['❤️','💖','🎴','💌'];
+  for(let i=0;i<15;i++){
+    const span = document.createElement('span');
+    span.textContent = floatEmojis[Math.floor(Math.random()*floatEmojis.length)];
+    span.className = Math.random()<0.5?'floating-heart':'floating-card';
+    span.style.left = Math.random()*90+'%';
+    const duration = 10 + Math.random()*10;
+    span.style.animationDuration = duration+'s';
+    span.style.animationDelay = Math.random()*2+'s';
+    span.style.transform = `rotate(${Math.random()*360}deg)`;
+    floatContainer.appendChild(span);
   }
-};
-backBtn.onclick = () => {
-  if (step > 1) {
-    step = Math.floor((step - 1) / 2) * 2 - 1;
-    if (step < 1) step = 1;
-    showStep();
-  } else {
-    memoryContainer.style.display = "none";
-    chooseBox.style.display = "flex";
-  }
-};
+}
+
+// Card click behavior
+const cards = document.querySelectorAll('.card');
+cards.forEach(card => {
+  card.addEventListener('click', () => {
+    card.classList.add('open');
+    setTimeout(() => {
+      if(card.id === 'memoriesBox'){
+        chooseBox.style.display = 'none';
+        memoryContainer.style.display = 'flex';
+        step = 0;
+        showStep();
+      } else if(card.id === 'messageBox'){
+        chooseBox.style.display = 'none';
+        bdayMessage.style.display = 'flex';
+        bdayPics.innerHTML = "";
+        bdayText.textContent = "";
+        bdayBackBtn.style.display = 'none';
+
+        const pics = [
+          "456512084_3927410717515868_941715196878329371_n.jpg",
+          "544897617_4288472074743062_3907929853341355282_n.jpg",
+          "471684144_1218071492999525_5298313658797533598_n.jpg"
+        ];
+
+        let index = 0;
+        function fadePics(){
+          if(index >= pics.length){
+            // After pics fade in, show message
+            const text = "Happy Birthday Alexa! 🥳💖 I’m so grateful for you. I hope your day is filled with love and happiness!";
+            let i = 0;
+            function showLetterByLetter(){
+              if(i < text.length){
+                const span = document.createElement('span');
+                span.textContent = text[i];
+                span.style.opacity = 0;
+                span.style.transition = "opacity 0.1s";
+                bdayText.appendChild(span);
+                setTimeout(()=>{ span.style.opacity = 1; }, 50);
+                i++;
+                setTimeout(showLetterByLetter, 30);
+              } else {
+                bdayBackBtn.style.display = 'block';
+              }
+            }
+            showLetterByLetter();
+            return;
+          }
+          const img = document.createElement('img');
+          img.src = pics[index];
+          if(index === pics.length-1) img.style.height = "180px"; // last pic slightly bigger
+          bdayPics.appendChild(img);
+          setTimeout(()=>{ img.style.opacity = 1; }, 50);
+          index++;
+          setTimeout(fadePics, 800);
+        }
+        fadePics();
+
+      } else if(card.id === 'backHomeBtn'){
+        chooseBox.style.display = 'none';
+        frontPage.style.display = 'flex';
+        yesBtn.disabled = false;
+        noBtn.disabled = false;
+      }
+      card.classList.remove('open');
+    }, 500);
+  });
+});
+
+// Birthday Message Back Button
+bdayBackBtn.onclick = () => { bdayMessage.style.display = 'none'; chooseBox.style.display = 'flex'; spawnFloaters(); };
 </script>
 </body>
 </html>
