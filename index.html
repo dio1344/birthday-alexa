@@ -87,7 +87,7 @@
 
 <!-- Choose Cards -->
 <div id="chooseBox">
-  <h2>Pick a Box 💌</h2>
+  <h2>Choose a Box Boss 💌</h2>
   <div id="floatContainer"></div>
   <div class="card" id="memoriesBox"><span>Memories 🌸</span></div>
   <div class="card" id="messageBox"><span>Birthday Message 🎀</span></div>
@@ -117,6 +117,7 @@
 <audio id="chooseMusic" src="wave to earth - love. (Official Lyric Video).mp3" loop></audio>
 <audio id="memoriesMusic" src="Taylor Swift - Daylight (Official Audio).mp3"></audio>
 <audio id="bdayMusic" src="i would like to greet to the happy birthday.mp3"></audio>
+<audio id="aboutYouMusic" src="The 1975 - About You (Official).mp3"></audio> <!-- NEW -->
 
 <script>
 const frontPage=document.getElementById('frontPage');
@@ -143,13 +144,14 @@ const bdayBackBtn=document.getElementById('bdayBackBtn');
 const chooseMusic=document.getElementById('chooseMusic');
 const memoriesMusic=document.getElementById('memoriesMusic');
 const bdayMusic=document.getElementById('bdayMusic');
+const aboutYouMusic=document.getElementById('aboutYouMusic'); // NEW
 
 const messages=[
 "Remember this pic? hahahaha the bombastick side eye moments nimo bwhahahaha anways this is my fav pic so far and it means alot to me thank you for everything boss💖",
-"I was kilig ani bwahahahaha ngl and it was fun hanging out with you beh. Never been so happy till i met you <3",
-"I like your eyes here very much cant stop staring at your eyes whenever mag uban ta and even its full of people all i see you and only you boss",
-"Ah yes syempre how could i forget this, My very First Time experiencing photo booth and im glad it was you alexa,it made me so happy boss 🌸",
-"Syempre the last one pinaka fave nako sa tanan slowly falling inlove with you at this moment alexa ❤️!"
+"I was kilig ani bwahahahaha not gonna lie and it was fun hanging out with you beh. Never been so happy thank you sooo much <3",
+"I like your eyes here very much cant stop staring at your eyes whenever mag uban ta and even its full of people all i see you and only you. kilig yan? nbwhahaahahahah",
+"Ah yes syempre how could i forget this, My very First Time experiencing photo booth and im glad it was you alexa i have no idea how to pose hahaahhaahaha sorry thumbs up lang alam ko meta kasi hahahahhhaa🌸",
+"Syempre the last one pinaka fave nako sa tanan and the best one so far nga pic we had ill cherish this moment what we had boss ❤️!"
 ];
 let step=0;
 
@@ -219,6 +221,20 @@ function playSegmentLoop(){
 
 function stopSegmentLoop(){ clearInterval(segmentInterval); memoriesMusic.pause(); }
 
+// About You one-time segment
+const aboutStart = 185; // 3:05
+const aboutEnd = 228;   // 3:48
+function playAboutYouOnce(){
+  aboutYouMusic.currentTime = aboutStart;
+  aboutYouMusic.play();
+  const check = setInterval(()=>{
+    if(aboutYouMusic.currentTime >= aboutEnd){
+      aboutYouMusic.pause();
+      clearInterval(check);
+    }
+  },200);
+}
+
 // Card click behavior
 const cards=document.querySelectorAll('.card');
 cards.forEach(card=>{
@@ -246,10 +262,11 @@ cards.forEach(card=>{
         let index=0;
         function fadePics(){
           if(index>=pics.length){
-            const text="Happy Birthday Alexa! 🥳💖 I’m so grateful for you. I hope your day is filled with love and happiness!";
+            const text="Happy Birthday Alexa! 🥳💖I just want you to know how much you mean to me and how grateful I am for all the moments we’ve shared even tho for a small period of time ato pag uban.You make everyone around you laugh, smile, and be happy. I hope today brings you the same joy you've brought to others.  I hope you have excellent health, countless possibilities, and success in whatever that you do this year.  Never forget that you are valued, loved, and cherished—not just today, but every day.Cheers to more experiences, late-night conversation/talks, laughing, and memories we can make together soon. always remember, You deserve nothing but the best—the love, the success, and the joy that life has to offer.I’ll be here to cheer you on, to celebrate your wins, and to share in your journey every step of the way.So, here's to you and your generosity, your strength, and your lovely soul.  Once more, happy birthday!  🎂✨ May this and every day ahead remind you of how genuinely beautiful you are, and may this year be your finest yet.Happy Birthday once again Alexa <3";
             let i=0;
             // Play music when text starts
             bdayMusic.currentTime=0; bdayMusic.play();
+            bdayMusic.onended=()=>{ playAboutYouOnce(); }; // NEW
             function showLetterByLetter(){
               if(i<text.length){
                 const span=document.createElement('span');
@@ -287,6 +304,8 @@ bdayBackBtn.onclick=()=>{
   chooseMusic.play();
   bdayMusic.pause();
   bdayMusic.currentTime=0;
+  aboutYouMusic.pause(); // NEW
+  aboutYouMusic.currentTime=aboutStart; // reset
 };
 </script>
 </body>
