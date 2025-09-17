@@ -222,8 +222,8 @@ function playSegmentLoop(){
 function stopSegmentLoop(){ clearInterval(segmentInterval); memoriesMusic.pause(); }
 
 // About You one-time segment
-const aboutStart = 185; // 3:05
-const aboutEnd = 228;   // 3:48
+const aboutStart = 143; // 2:23
+const aboutEnd = 300;   // 5:00
 function playAboutYouOnce(){
   aboutYouMusic.currentTime = aboutStart;
   aboutYouMusic.play();
@@ -257,12 +257,15 @@ cards.forEach(card=>{
         const pics=[
           "456512084_3927410717515868_941715196878329371_n.jpg",
           "544897617_4288472074743062_3907929853341355282_n.jpg",
-          "471684144_1218071492999525_5298313658797533598_n.jpg"
+          "471684144_1218071492999525_5298313658797533598_n.jpg",
+          "alexa1.jpg",
+          "IMG_6125.jpg",
+         "IMG_6130.jpg"
         ];
         let index=0;
         function fadePics(){
           if(index>=pics.length){
-            const text="Happy Birthday Alexa! 🥳💖I just want you to know how much you mean to me and how grateful I am for all the moments we’ve shared even tho for a small period of time ato pag uban.You make everyone around you laugh, smile, and be happy. I hope today brings you the same joy you've brought to others.  I hope you have excellent health, countless possibilities, and success in whatever that you do this year.  Never forget that you are valued, loved, and cherished—not just today, but every day.Cheers to more experiences, late-night conversation/talks, laughing, and memories we can make together soon. always remember, You deserve nothing but the best—the love, the success, and the joy that life has to offer.I’ll be here to cheer you on, to celebrate your wins, and to share in your journey every step of the way.So, here's to you and your generosity, your strength, and your lovely soul.  Once more, happy birthday!  🎂✨ May this and every day ahead remind you of how genuinely beautiful you are, and may this year be your finest yet.Happy Birthday once again Alexa <3";
+            const text="You have this special ability to make everyone around you laugh, smile, and feel lighthearted—and that's such a rare and beautiful gift. Happy birthday, Alexa! 🥳💖 I just wanted to let you know how much you mean to me and how grateful I am for all the moments we've shared, even if it was only for a short time. Ato pag uban, those little memories are treasures to me, and they always make me smile whenever I think about them. I wish you the same joy and love that you have freely shown to others today.  I hope you have great health, countless possibilities, and success in whatever you choose to do this year.  Remember that you are loved, appreciated, and cherished every day, not only on your birthday. I'm looking forward to many more adventures with you, late night conversations, uncontrollable laughing, and the many memories we'll make together.  Never forget that you are worthy of the greatest in life, including the purest love, the most brilliant success, and the most profound joy.  I promise to be there for you at every turn, to encourage you, to celebrate your victories, and to support you. Through your goodness, tenacity, and lovely soul, you inspire me in ways you are unaware of.  I respect your strength, your capacity for generosity, and the way that your presence alone brightens life.  I hope the days ahead serve as a constant reminder of your true beauty, both within and out. So, Alexa, here's to you, your heart, your laughter, and everything that makes you the wonderful person you are.  🌸 Happy Birthday once more!  🎂✨ I hope that this year will be the best one yet, full of prosperity, love, and innumerable blessings.  💖💐";
             let i=0;
             // Play music when text starts
             bdayMusic.currentTime=0; bdayMusic.play();
